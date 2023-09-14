@@ -34,6 +34,8 @@ export type WaveSurferOptions = {
   fillParent?: boolean
   /** Audio URL */
   url?: string
+
+  arr?: Array<Float32Array | number[]>
   /** Pre-computed audio data, arrays of floats for each channel */
   peaks?: Array<Float32Array | number[]>
   /** Pre-computed audio duration in seconds */
@@ -158,6 +160,12 @@ class WaveSurfer extends Player<WaveSurferEvents> {
     if (url) {
       this.load(url, this.options.peaks, this.options.duration)
     }
+    if (arr) {
+      const blob = new Blob([arr], {type: 'audio/wav'});
+      this.loadBlob(blob, this.options.peaks, this.options.duration)
+    }
+    
+    
   }
 
   private initTimerEvents() {
